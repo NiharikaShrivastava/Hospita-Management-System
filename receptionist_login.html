@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Receptionist Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(to right, #00c6ff, #0072ff);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Poppins', sans-serif;
+        }
+        .login-container {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+            width: 400px;
+            text-align: center;
+        }
+        .login-container h2 {
+            margin-bottom: 20px;
+            color: #0072ff;
+        }
+        .form-control {
+            border-radius: 25px;
+            padding: 12px;
+        }
+        .btn-custom {
+            width: 100%;
+            padding: 12px;
+            border-radius: 25px;
+            background: #0072ff;
+            color: white;
+            font-weight: bold;
+            border: none;
+            transition: background 0.3s;
+        }
+        .btn-custom:hover {
+            background: #0056b3;
+        }
+        .forgot-password {
+            margin-top: 10px;
+        }
+    </style>
+    <script>
+        function handleLogin(event) {
+            event.preventDefault();
+            var username = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
+            
+            if (username === "receptionist@123" && password === "123") {
+                window.location.href = "receptionist_dashboard.html";
+            } else {
+                alert("Invalid username or password");
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Receptionist Login</h2>
+        <form onsubmit="handleLogin(event)">
+            <div class="mb-3">
+                <input type="text" id="username" class="form-control" placeholder="Username" required>
+            </div>
+            <div class="mb-3">
+                <input type="password" id="password" class="form-control" placeholder="Password" required>
+            </div>
+            <button type="submit" class="btn btn-custom">Login</button>
+            <div class="forgot-password">
+                <a href="#" class="text-muted">Forgot Password?</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
