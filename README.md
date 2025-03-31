@@ -1,7 +1,18 @@
 # Hospital-Management-System
-A hospital is a healthcare institution providing patient treatment with specialized health science and auxiliary healthcare staff and medical equipment.
+This is a Hospital Management System web application built using HTML, CSS, and JavaScript for the frontend, and Firebase as the backend. It provides a seamless experience for managing hospital-related activities such as doctor, patient, and receptionist interactions.
 
-Basic website created using HTML, CSS and JS.
+Features
+ User Authentication (Doctors, Patients, Receptionists)
+ Doctor & Patient Management (Firebase Firestore Database)
+ Appointment Booking System
+ Real-time Data Storage & Retrieval
+ Responsive UI with Bootstrap
+ Secure Data Handling with Firebase
+
+Technologies Used
+Frontend: HTML, CSS, JavaScript, Bootstrap
+
+Backend: Firebase (Firestore, Authentication, Hosting)
 
 ![image](https://github.com/user-attachments/assets/bfba0e7e-0e34-47ee-b286-6e298a31823f)
 ![image](https://github.com/user-attachments/assets/edc20512-8e03-4ba0-b11b-f0ec543dd5ae)
