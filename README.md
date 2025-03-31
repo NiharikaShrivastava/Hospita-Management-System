@@ -2,14 +2,20 @@
 This is a Hospital Management System web application built using HTML, CSS, and JavaScript for the frontend, and Firebase as the backend. It provides a seamless experience for managing hospital-related activities such as doctor, patient, and receptionist interactions.
 
 Features
- User Authentication (Doctors, Patients, Receptionists)
- Doctor & Patient Management (Firebase Firestore Database)
- Appointment Booking System
- Real-time Data Storage & Retrieval
- Responsive UI with Bootstrap
- Secure Data Handling with Firebase
+ 1.User Authentication (Doctors, Patients, Receptionists)
+ 
+ 2.Doctor & Patient Management (Firebase Firestore Database)
+ 
+ 3.Appointment Booking System
+ 
+ 4.Real-time Data Storage & Retrieval
+ 
+ 5.Responsive UI with Bootstrap
+ 
+ 6.Secure Data Handling with Firebase
 
 Technologies Used
+
 Frontend: HTML, CSS, JavaScript, Bootstrap
 
 Backend: Firebase (Firestore, Authentication, Hosting)
