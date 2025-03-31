@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Receptionist Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script type="module">
+        // ✅ Firebase Import
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js";
+        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-firestore.js";
+        
+        // ✅ Firebase Config
+        const firebaseConfig = {
+            apiKey: "AIzaSyCXWXmBdwsTHCZMQcBFwjWQVENIP606sfY",
+            authDomain: "hospital-management-syst-fbc84.firebaseapp.com",
+            projectId: "hospital-management-syst-fbc84",
+            storageBucket: "hospital-management-syst-fbc84.firebasestorage.app",
+            messagingSenderId: "562599392807",
+            appId: "1:562599392807:web:dbf3c488f0bdb797ba4002",
+            measurementId: "G-0MGGQY900W"
+
+        };
+        
+        // ✅ Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        
+        // ✅ Fetch Doctors Data
+        async function fetchDoctors() {
+            let content = `<h3>Doctors</h3><table class='table table-bordered'><tr><th>Name</th><th>Specialization</th></tr>`;
+            const querySnapshot = await getDocs(collection(db, "doctors"));
+            querySnapshot.forEach((doc) => {
+                const data = doc.data();
+                content += `<tr><td>${data.name}</td><td>${data.specialization}</td></tr>`;
+            });
+            content += `</table>`;
+            document.getElementById("content").innerHTML = content;
+        }
+        // ✅ Fetch Billing Data
+        async function fetchbilling() {
+            let content = `<h3>Billing</h3><table class='table table-bordered'><tr><th>Patient Name</th><th>Amount</th><th>Status</th></tr>`;
+            const querySnapshot = await getDocs(collection(db, "billing"));
+            querySnapshot.forEach((bill) => {
+                const data = bill.data();
+                content += `<tr><td>${data.patient_name}</td><td>${data.amount}</td><td>${data.status}</tr>`;
+            });
+            content += `</table>`;
+            document.getElementById("content").innerHTML = content;
+        }
+        // ✅ Fetch Messages Data
+        async function fetchmessages() {
+            let content = `<h3>Messages</h3><table class='table table-bordered'><tr><th>Name</th><th>Query</th></tr>`;
+            const querySnapshot = await getDocs(collection(db, "messages"));
+            querySnapshot.forEach((msg) => {
+                const data = msg.data();
+                content += `<tr><td>${data.name}</td><td>${data.query}</td></tr>`;
+            });
+            content += `</table>`;
+            document.getElementById("content").innerHTML = content;
+        }
+        // ✅ Fetch Appointments Data
+        async function fetchappointments() {
+            let content = `<h3>Appointments</h3><table class='table table-bordered'><tr><th>Name</th><th>Date</th><th>Status</th></tr>`;
+            const querySnapshot = await getDocs(collection(db, "appointments"));
+            querySnapshot.forEach((app) => {
+                const data = app.data();
+                content += `<tr><td>${data.patient_name}</td><td>${data.date}</td><td>${data.status}</td></tr>`;
+            });
+            content += `</table>`;
+            document.getElementById("content").innerHTML = content;
+        }
+        // ✅ Fetch Patients Data
+        async function fetchpatients() {
+            let content = `<h3>Patients</h3><table class='table table-bordered'><tr><th>Name</th><th>Age</th><th>Contact</th><th>Medical</th><th>Last Visit</th></tr>`;
+            const querySnapshot = await getDocs(collection(db, "patients"));
+            querySnapshot.forEach((pt) => {
+                const data = pt.data();
+                content += `<tr><td>${data.name}</td><td>${data.age}</td><td>${data.contact}</td><td>${data.medical}</td><td>${data.last_visit}</td></tr>`;
+            });
+            content += `</table>`;
+            document.getElementById("content").innerHTML = content;
+        }
+        
+        // ✅ Load Content Based on Menu Selection
+        window.loadContent = function(section) {
+            let content = document.getElementById("content");
+            if (section === 'appointments') {
+                fetchappointments();
+            } else if (section === 'patients') {
+                fetchpatients();
+            } else if (section === 'messages') {
+                
+                                    fetchmessages();
+            } else if (section === 'billing') {
+                
+                                    fetchbilling();
+            } else if (section === 'doctors') {
+                fetchDoctors();
+            }
+        };
+        
+        // ✅ Logout Function
+        window.logout = function() {
+            window.location.href = "index.html";
+        }
+    </script>
+    <style>
+        body { background: #e3f2fd; font-family: 'Poppins', sans-serif; }
+        .sidebar { width: 250px; height: 100vh; background: #0072ff; color: white; position: fixed; padding: 20px; }
+        .sidebar h2 { text-align: center; margin-bottom: 20px; }
+        .sidebar ul { list-style: none; padding: 0; }
+        .sidebar ul li { padding: 15px; border-bottom: 1px solid rgba(255, 255, 255, 0.2); cursor: pointer; }
+        .sidebar ul li:hover { background: #0056b3; }
+        .main-content { margin-left: 270px; padding: 20px; }
+        .header { background: white; padding: 15px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>Receptionist Dashboard</h2>
+        <ul>
+            <li onclick="loadContent('appointments')">Appointments</li>
+            <li onclick="loadContent('patients')">Patients</li>
+            <li onclick="loadContent('messages')">Messages</li>
+            <li onclick="loadContent('billing')">Billing</li>
+            <li onclick="loadContent('doctors')">Doctors</li>
+            <li>Settings</li>
+            <li onclick="logout()">Logout</li>
+        </ul>
+    </div>
+    <div class="main-content">
+        <div class="header">
+            <h1>Welcome, Receptionist</h1>
+        </div>
+        <div id="content" class="container mt-4">
+            <h3>Dashboard Overview</h3>
+            <p>Click on the menu options to view details.</p>
+        </div>
+    </div>
+</body>
+</html>

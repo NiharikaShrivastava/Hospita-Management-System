@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Dashboard</title>
+    <script type="module">
+        // ✅ Firebase Import
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js";
+        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-firestore.js";
+        
+        // ✅ Firebase Config
+        const firebaseConfig = {
+            apiKey: "AIzaSyCXWXmBdwsTHCZMQcBFwjWQVENIP606sfY",
+            authDomain: "hospital-management-syst-fbc84.firebaseapp.com",
+            projectId: "hospital-management-syst-fbc84",
+            storageBucket: "hospital-management-syst-fbc84.firebasestorage.app",
+            messagingSenderId: "562599392807",
+            appId: "1:562599392807:web:dbf3c488f0bdb797ba4002",
+            measurementId: "G-0MGGQY900W"
+        };
+        
+        // ✅ Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // ✅ Fetch Appointments Data
+        async function fetchappointments() {
+            let content = `<h3>Appointments</h3><table class='table table-bordered'><tr><th>Name</th><th>Date</th><th>Status</th></tr>`;
+            const querySnapshot = await getDocs(collection(db, "appointments"));
+            querySnapshot.forEach((app) => {
+                const data = app.data();
+                content += `<tr><td>${data.patient_name}</td><td>${data.date}</td><td>${data.status}</td></tr>`;
+            });
+            content += `</table>`;
+            document.getElementById("content").innerHTML = content;
+        }
+
+        // ✅ Fetch Patients Data
+        async function fetchpatients() {
+            let content = `<h3>Patients</h3><table class='table table-bordered'><tr><th>Name</th><th>Age</th><th>Contact</th><th>Medical</th><th>Last Visit</th></tr>`;
+            const querySnapshot = await getDocs(collection(db, "patients"));
+            querySnapshot.forEach((pt) => {
+                const data = pt.data();
+                content += `<tr><td>${data.name}</td><td>${data.age}</td><td>${data.contact}</td><td>${data.medical}</td><td>${data.last_visit}</td></tr>`;
+            });
+            content += `</table>`;
+            document.getElementById("content").innerHTML = content;
+        }
+
+        // ✅ Load Content Based on Menu Selection
+        window.loadContent = function(section) {
+            if (section === 'appointments') {
+                fetchappointments();
+            } else if (section === 'patients') {
+                fetchpatients();
+            } else if (section === 'prescriptions') {
+                document.getElementById("content").innerHTML = `
+                    <h3>Prescriptions</h3>
+                    <ul>
+                        <li>Paracetamol - 500mg - Issued: 10-Mar</li>
+                        <li>Amoxicillin - 250mg - Issued: 12-Mar</li>
+                        <li>Metformin - 850mg - Issued: 15-Mar</li>
+                    </ul>`;
+            }
+        };
+
+        // ✅ Logout Function
+        window.logout = function() {
+            window.location.href = "index.html";
+        };
+    </script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+        .sidebar {
+            width: 250px;
+            background: #007bff;
+            color: white;
+            padding: 20px;
+            height: 100vh;
+        }
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .sidebar ul li {
+            padding: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            transition: 0.3s;
+        }
+        .sidebar ul li:hover {
+            background: #0056b3;
+        }
+        .sidebar ul li img {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+        }
+        .main-content {
+            flex-grow: 1;
+            padding: 20px;
+        }
+        .header {
+            background: white;
+            padding: 15px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .profile {
+            display: flex;
+            align-items: center;
+        }
+        .profile img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .content-section {
+            margin-top: 20px;
+            background: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>Doctor Dashboard</h2>
+        <ul>
+            <li onclick="loadContent('appointments')">
+                <img src="business-deadline-icon.png" alt="Appointments"> Appointments
+            </li>
+            <li onclick="loadContent('patients')">
+                <img src="patients-icon.png" alt="Patients"> Patients
+            </li>
+            <li onclick="loadContent('prescriptions')">
+                <img src="medical-prescription-icon.png" alt="Prescriptions"> Prescriptions
+            </li>
+            <li>
+                <img src="settings-icon.png" alt="Settings"> Settings
+            </li>
+            <li onclick="logout()">
+                <img src="logout-icon.png" alt="Logout"> Logout
+            </li>
+        </ul>
+    </div>
+    <div class="main-content">
+        <div class="header">
+            <h1>Welcome, Doctor</h1>
+            <div class="profile">
+                <img src="doctor-profile.png" alt="Doctor">
+                <p>Dr. Narayan Jha</p>
+            </div>
+        </div>
+        <div id="content" class="content-section">
+            <h3>Dashboard Overview</h3>
+            <p>Welcome to your dashboard. Click on the options in the sidebar to view details.</p>
+        </div>
+    </div>
+</body>
+</html>
